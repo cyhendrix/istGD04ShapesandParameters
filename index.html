@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Lesson 04 | Shapes and Parameters</title>
+<style>
+:root{font-family:Arial,sans-serif;color:#242038;background:#f5f0fb}*{box-sizing:border-box}body{margin:0}header{background:#48216d;color:white;padding:24px max(20px,calc((100% - 980px)/2))}header h1{margin:6px 0;font-size:clamp(23px,4vw,34px)}header p{margin:0;color:#e9dcf4}.wrap{max-width:980px;margin:20px auto;padding:0 15px}.tabs{display:flex;gap:8px;flex-wrap:wrap}.tabs button{border:2px solid #48216d;background:white;color:#48216d;border-radius:10px;padding:12px 15px;cursor:pointer;font-weight:700}.tabs button.active{background:#48216d;color:white}section{background:white;border-radius:16px;padding:24px;margin-top:15px;box-shadow:0 3px 12px #2d17421c}section[hidden]{display:none}h2{margin-top:0;color:#48216d}.muted{color:#5f5968}.question{border:1px solid #ddd4e8;padding:16px;border-radius:12px;margin:15px 0}select,input{padding:10px;border:1px solid #9386a0;border-radius:8px;max-width:100%;font:inherit}select{width:100%}label{display:block;font-weight:bold;margin:8px 0}.choices label.answer-correct,.answer-correct{color:#14532d;background:#dcfce7;font-weight:700}.choices label.answer-wrong,.answer-wrong{color:#7f1d1d;background:#fee2e2;font-weight:700}.step span.answer-correct,.step span.answer-wrong{padding:8px;border-radius:7px}.choices{display:grid;gap:9px}.choices label{border:1px solid #ddd4e8;border-radius:9px;padding:10px;font-weight:normal;cursor:pointer}.choices input{margin-right:8px}.bank{background:#f3ebfc;padding:12px;border-radius:9px;margin:10px 0}.btn{border:0;border-radius:9px;background:#48216d;color:white;padding:12px 18px;font-weight:bold;cursor:pointer;margin:7px 7px 0 0}.btn.secondary{background:#eee8f5;color:#48216d}.feedback{font-weight:bold;margin:9px 0}.correct{color:#14672b}.wrong{color:#a11b25}.score{font-weight:bold;color:#48216d;background:#eadcf7;border-radius:9px;padding:10px;margin-top:10px}.step{display:flex;gap:10px;align-items:center;padding:9px;border:1px solid #ddd;border-radius:9px;margin:7px 0}.step span{flex:1}.step:not(.locked){cursor:grab;touch-action:none;user-select:none;border:2px solid #ddd4e8;background:#fffaf0;padding:14px}.step:not(.locked):active{cursor:grabbing}.step.dragging{opacity:.5}.step.drop-target{border-color:#48216d;background:#eadcf7}.step:focus-visible{outline:3px solid #f0c537;outline-offset:2px}.drag-handle{flex:0!important;color:#48216d;font-size:22px}.step.locked{background:#f3f0f6}.footer{margin-top:20px;font-size:13px;color:#665c6f}
+.student-card{padding:0;overflow:hidden;border:3px solid #f0c537;background:#fffaf0}.student-card h2{background:#48216d;color:white;margin:0;padding:16px 22px}.student-inner{padding:18px 22px}.student-inner p{margin-top:0}.student-fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.student-fields label{font-weight:800}.student-fields input,.student-fields select{width:100%;border:2px solid #48216d;font-weight:700;background:white}.student-inner .btn{margin-top:12px}@media(max-width:650px){.student-fields{grid-template-columns:1fr}}  .results-card{border:3px solid #f0c537;background:#fffaf0;padding:0;overflow:hidden}.results-card h2{background:#48216d;color:white;padding:16px 22px;margin:0;border-bottom:4px solid #f0c537;font-size:22px}.results-inner{padding:18px 22px}.results-inner #result{font-weight:700;margin-top:0}.results-inner .footer{line-height:1.5} .grid-pair{display:grid;grid-template-columns:1fr 1fr;gap:20px}.grid-pair svg{width:100%;max-width:340px;display:block;margin:auto;touch-action:manipulation}.grid-pair svg text{font:16px Arial;fill:#48216d}.coordinate-controls{display:flex;gap:20px}.coordinate-controls label{flex:1}.btn:disabled{opacity:.6;cursor:default} @media(max-width:560px){.grid-pair{grid-template-columns:1fr}.grid-pair svg{max-width:280px}}  [hidden]{display:none!important} .grid-pair.word-grid{grid-template-columns:1fr}.word-grid svg{max-width:480px}  .question p{white-space:pre-line;line-height:1.5}.code-tile{font-family:Consolas,monospace;font-size:15px}.code-order{margin-top:12px}  .parameter-bank{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}.number-tile{font:700 22px Arial;background:#fff4c7;border:2px solid #48216d;border-radius:9px;min-width:64px;padding:12px;cursor:grab;touch-action:none}.number-tile.placed{background:#eee8f5}.number-tile:focus-visible{outline:3px solid #f0c537;outline-offset:3px}.number-tile.dragging{opacity:.5}.parameter-command{font-family:Consolas,monospace;line-height:1.8;background:#f5f0fb;padding:12px;border-radius:10px}.parameter-slots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:8px 0}.parameter-slot{border:2px dashed #b9a9c9;border-radius:8px;padding:8px}.parameter-slot.drop-target{background:#fff4c7;border-color:#48216d}.parameter-slot label{margin:0;font:700 15px Arial}.parameter-slot select{margin-top:8px}.parameter-bank button:disabled{cursor:default;opacity:.65} </style></head><body><header><div>UNIT 03 • INTERACTIVE ANIMATIONS AND GAMES</div><h1>Lesson 04: Shapes and Parameters</h1><p>Shape size, position, and background • Identify → Build → Apply → Debug</p></header><main class="wrap"><div class="tabs" id="tabs" hidden></div><div id="score" class="score" hidden aria-live="polite"></div>
+<section id="student" class="student-card"><h2>✦ Student Information</h2><div class="student-inner"><p>Enter your first name, last name, and choose your class period. Then click <b>Begin Practice Lab</b> to open the activities.</p><div class="student-fields"><div><label for="first">First Name</label><input id="first" autocomplete="given-name" placeholder="First Name"></div><div><label for="last">Last Name</label><input id="last" autocomplete="family-name" placeholder="Last Name"></div><div><label for="period">Class Period</label><select id="period"><option value="">Choose a class period</option><option>1st Block</option><option>2nd Block</option><option>3rd Block</option><option>4th Block</option></select></div></div><p id="studentMsg" class="feedback"></p><button class="btn" id="start">Begin Practice Lab</button></div></section>
+<section id="identify" hidden><h2>Identify: Parameters and Shapes</h2><p>Use the word bank to match each term to its meaning. Choose an answer for every item.</p><div class="bank"><b>Word Bank:</b> <span id="wordBank"></span></div><div id="identifyQs"></div><button class="btn" id="checkIdentify">Check Answers</button><p id="identifySummary" class="feedback"></p><button class="btn" data-next="build">Next: Build →</button></section>
+<section id="build" hidden><h2>Build: Complete the Drawing Commands</h2><p>Match each target picture. Drag the number tiles into the x, y, width, and height slots. You can also click a number and then a slot, or use the dropdowns. Each complete drawing earns one point.</p><div id="buildQs"></div><button class="btn" id="checkOrder">Check Answers</button><p class="feedback" id="orderFeedback" aria-live="polite"></p><button class="btn" data-next="apply">Next: Apply →</button></section>
+<section id="apply" hidden><h2>Apply: Predict Parameter Changes</h2><p>Choose how a parameter change affects the drawing.</p><div id="applyQs"></div><button class="btn" id="checkApply">Check Answers</button><p id="applySummary" class="feedback"></p><button class="btn" data-next="debug">Next: Debug →</button></section>
+<section id="debug" hidden><h2>Debug: Fix the Parameters</h2><p>Find the mistake and choose the code change that fixes it.</p><div id="debugQs"></div><button class="btn" id="checkDebug">Check Answers</button><p id="debugSummary" class="feedback"></p><button class="btn" data-next="finish">View Results →</button></section>
+<section id="finish" class="results-card" hidden><h2>✓ Turn In Your Results</h2><div class="results-inner"><p id="result"></p><p id="resultStudent"></p><p>Check your name and class period above, then send your final score to your teacher.</p><p id="submitStatus" class="feedback" aria-live="polite"></p><button class="btn" id="submit">Submit My Results</button><button class="btn secondary" id="review">Review Answers</button><button class="btn secondary" id="reset" hidden>Reset Lab / Start Over</button><p class="footer"><b>Saved Work &amp; Grade Recovery</b><br>Your name, class period, and answers save automatically on this computer and browser. Reset becomes available after your grade submission is confirmed. It clears this browser's saved attempt without deleting recorded grades.</p></div></section></main>
+<script>
+const STORE='ist-gd-l04-v1',SUBMIT_URL='https://script.google.com/macros/s/AKfycbybyHZOk6bkklsDYBqFlY1x3eK3Ew0XPMdYxBISs4LPVehJTXyFBPK5P8hHsIm2rkZVzg/exec';
+const defs=[
+['Parameter','An input value that tells a command exactly what to do.'],
+['x-position','Tells how far right to place a shape, measured from the left edge.'],
+['y-position','Tells how far down to place a shape, measured from the top edge.'],
+['Width','The size of a shape from left to right.'],
+['Height','The size of a shape from top to bottom.'],
+['background()','Paints the entire drawing area with the chosen color.']];
+const apply=[
+['Compare these commands:\nrect(80, 120, 160, 60);\nrect(80, 120, 200, 60);\nWhat changes?',['The rectangle becomes wider; its top-left corner stays in the same place','The rectangle moves farther right','The rectangle becomes taller'],0],
+['An oval is drawn with ellipse(200, 180, 120, 60).\nWhich command makes a circle at the same center?',['ellipse(120, 60, 200, 180);','ellipse(200, 180, 120, 120);','rect(200, 180, 120, 120);'],1],
+['A rectangle is drawn with rect(100, 80, 60, 140).\nWhich change moves its top-left corner 50 pixels down without resizing it?',['rect(150, 80, 60, 140);','rect(100, 80, 60, 190);','rect(100, 130, 60, 140);'],2],
+['What is visible after this code runs?\nbackground("purple");\nfill("gold");\nellipse(200, 200, 100, 100);',['A gold circle on a purple background','A purple circle on a gold background','Only a gold background'],0]];
+const debug=[
+['A rectangle should be 160 pixels wide and 60 pixels tall.\nThe code is rect(80, 120, 60, 160);\nWhich replacement fixes its size?',['rect(80, 120, 160, 60);','rect(120, 80, 60, 160);','rect(160, 60, 80, 120);'],0],
+['This code should show a gold circle on a purple background, but the circle disappears.\nfill("gold");\nellipse(200, 200, 100, 100);\nbackground("purple");\nWhat fixes it?',['Make the circle smaller','Move background("purple"); before the shape is drawn','Change the circle’s x-position'],1],
+['An oval should have its center at (100, 260), be 60 pixels wide, and be 140 pixels tall.\nThe code is ellipse(260, 100, 60, 140);\nWhich replacement fixes its position?',['ellipse(260, 100, 140, 60);','ellipse(100, 260, 60, 140);','rect(100, 260, 60, 140);'],1]];
+const buildTasks=[
+{shape:'rect',values:[80,120,160,60],title:'Wide purple rectangle',description:'Draw a purple rectangle with its top-left corner at (80, 120). Its width is 160 and its height is 60.',color:'purple'},
+{shape:'ellipse',values:[220,180,120,60],title:'Wide gold oval',description:'Draw a gold oval centered at (220, 180). Its width is 120 and its height is 60.',color:'gold'},
+{shape:'rect',values:[200,60,80,180],title:'Tall gold rectangle',description:'Draw a gold rectangle with its top-left corner at (200, 60). Its width is 80 and its height is 180.',color:'gold'},
+{shape:'ellipse',values:[100,260,60,140],title:'Tall purple oval',description:'Draw a purple oval centered at (100, 260). Its width is 60 and its height is 140.',color:'purple'}
+];
+const saved=(()=>{try{return JSON.parse(localStorage.getItem(STORE))||{}}catch{return {}}})();
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const state=Object.assign({name:'',period:'',identify:{},apply:{},debug:{},build:{},page:'student',questionOrder:{},choiceOrder:{},checked:{identify:false,apply:false,debug:false,build:false},submitted:false},saved);
+for(const [key,n] of [['identify',defs.length],['apply',apply.length],['debug',debug.length]]){if(!state.questionOrder[key]||state.questionOrder[key].length!==n)state.questionOrder[key]=shuffle(Array.from({length:n},(_,i)=>i))}
+if(!state.choiceOrder.identify)state.choiceOrder.identify=shuffle(defs.map(x=>x[0]));
+for(const [key,items] of [['apply',apply],['debug',debug]]){if(!state.choiceOrder[key])state.choiceOrder[key]={};items.forEach((q,i)=>{if(!state.choiceOrder[key][i])state.choiceOrder[key][i]=shuffle(q[1].map((_,j)=>j))})}
+state.attempts=Object.assign({identify:0,build:0,apply:0,debug:0},state.attempts||{});
+const save=()=>localStorage.setItem(STORE,JSON.stringify(state));
+const activityPassed=key=>{
+  if(!state.checked[key]||state.attempts[key]<1)return false;
+  if(key==='identify')return defs.every((d,i)=>state.identify[i]===d[0]);
+  if(key==='build')return buildTasks.every((t,i)=>Array.isArray(state.build[i])&&state.build[i].every((v,j)=>v===t.values[j]));
+  const items=key==='apply'?apply:debug;
+  return items.every((q,i)=>state[key][i]!==undefined&&Number(state[key][i])===q[2]);
+};
+const locked=key=>state.attempts[key]>=2||activityPassed(key);
+const checkedAll=()=>['identify','build','apply','debug'].every(locked);
+function attemptsLabel(key){return locked(key)?state.attempts[key]+' of 2 checks used. Activity complete. Answers locked. Continue to the next tab.':state.attempts[key]+' of 2 checks used. You have '+(2-state.attempts[key])+' remaining.'}
+function syncChecks(){for(const [key,button] of [['identify','checkIdentify'],['build','checkOrder'],['apply','checkApply'],['debug','checkDebug']])document.getElementById(button).disabled=locked(key);}
+const pages=['student','identify','build','apply','debug','finish'];
+const label={student:'Student Info',identify:'Identify',build:'Build',apply:'Apply',debug:'Debug',finish:'Results'};
+const score=()=>{let n=0;defs.forEach((d,i)=>{if(state.identify[i]===d[0])n++});buildTasks.forEach((t,i)=>{if(Array.isArray(state.build[i])&&state.build[i].every((v,j)=>v===t.values[j]))n++});for(const [key,items] of [['apply',apply],['debug',debug]])items.forEach((q,i)=>{if(state[key][i]!==undefined&&Number(state[key][i])===q[2])n++});return n};
+const total=defs.length+buildTasks.length+apply.length+debug.length;
+function drawScore(){document.getElementById('score').textContent='Practice questions: '+total+' • Check your answers on each tab to see feedback.'}
+function show(page){if(page==='finish'&&!checkedAll()){alert('Finish every activity before viewing results.');return}if(page!=='student'&&(!state.name.trim()||!state.period)){page='student';document.getElementById('studentMsg').textContent='Enter your name and class period first.'}state.page=page;save();document.getElementById('tabs').hidden=page==='student';document.getElementById('score').hidden=page==='student';pages.forEach(p=>document.getElementById(p).hidden=p!==page);document.querySelectorAll('#tabs button').forEach(b=>{b.classList.toggle('active',b.dataset.page===page);b.setAttribute('aria-current',b.dataset.page===page?'step':'false')});if(page==='finish')syncSubmission();if(page==='finish'){document.getElementById('result').textContent=score()+' points out of '+total+' — Grade: '+Math.round(100*score()/total)+'%';document.getElementById('resultStudent').textContent=state.name+' • '+state.period+' • Lesson 04';}drawScore();syncChecks();window.scrollTo(0,0)}
+const tabs=document.getElementById('tabs');pages.forEach(p=>{let b=document.createElement('button');b.textContent=label[p];b.dataset.page=p;b.onclick=()=>show(p);tabs.appendChild(b)});
+const pieces=(state.name||'').trim().split(/\s+/);document.getElementById('first').value=pieces.shift()||'';document.getElementById('last').value=pieces.join(' ');document.getElementById('period').value=state.period;
+for(let field of ['first','last','period'])document.getElementById(field).addEventListener('change',()=>{state.name=[document.getElementById('first').value.trim(),document.getElementById('last').value.trim()].filter(Boolean).join(' ');state.period=document.getElementById('period').value;save()});
+document.getElementById('start').onclick=()=>{const first=document.getElementById('first').value.trim(),last=document.getElementById('last').value.trim();state.name=[first,last].filter(Boolean).join(' ');state.period=document.getElementById('period').value;if(!first||!last||!state.period){document.getElementById('studentMsg').textContent='Please enter your first name, last name, and class period.';return}document.getElementById('studentMsg').textContent='';show('identify')};
+document.querySelectorAll('[data-next]').forEach(b=>b.onclick=()=>{let current=b.closest('section').id;if(!locked(current)){alert('Check your answers and finish this activity before moving to the next tab.');return}show(b.dataset.next)});
+function renderMatch(){updateActivitySummary('identify');const target=document.getElementById('identifyQs');target.replaceChildren();document.getElementById('wordBank').textContent=state.choiceOrder.identify.join(' • ');state.questionOrder.identify.forEach((i,position)=>{let d=defs[i],box=document.createElement('div');box.className='question';let prompt=document.createElement('label');prompt.textContent=(position+1)+'. '+d[1];let select=document.createElement('select');select.innerHTML='<option value="">Select a term</option>'+state.choiceOrder.identify.map(word=>'<option>'+word+'</option>').join('');select.value=state.identify[i]||'';select.disabled=locked('identify');if(state.checked.identify)select.classList.add(select.value===d[0]?'answer-correct':'answer-wrong');let feedback=document.createElement('p');feedback.className='feedback';const update=()=>{feedback.textContent=state.checked.identify?(select.value===d[0]?'✓ Correct!':'Not correct yet. Try again.') :'';feedback.className='feedback '+(select.value===d[0]?'correct':'wrong')};select.onchange=()=>{state.identify[i]=select.value;state.checked.identify=false;save();renderMatch()};box.append(prompt,select,feedback);target.append(box);update()})}
+document.getElementById('checkIdentify').onclick=()=>{if(locked('identify'))return;state.attempts.identify++;state.checked.identify=true;save();renderMatch();syncChecks();updateActivitySummary('identify')};
+
+
+
+if(!state.questionOrder.build)state.questionOrder.build=shuffle(buildTasks.map((_,i)=>i));
+if(!state.choiceOrder.build)state.choiceOrder.build={};
+buildTasks.forEach((t,i)=>{
+ if(!Array.isArray(state.build[i]))state.build[i]=[null,null,null,null];
+ if(!state.choiceOrder.build[i])state.choiceOrder.build[i]=shuffle(t.values);
+});
+let selectedTile=null;
+function assignParameter(task,slot,value){
+ if(locked('build'))return;
+ const values=state.build[task];
+ const duplicate=value===null?-1:values.indexOf(value);
+ if(duplicate!==-1&&duplicate!==slot)values[duplicate]=null;
+ values[slot]=value;state.checked.build=false;selectedTile=null;
+ save();renderOrder();syncChecks();
+}
+function targetGrid(t){
+ const [x,y,w,h]=t.values;
+ let svg='<svg viewBox="-40 -40 460 460" role="img" aria-label="'+t.description+'"><rect x="0" y="0" width="400" height="400" fill="lavender" stroke="#48216d"/>';
+ for(let n=0;n<=400;n+=20)svg+='<path d="M '+n+' 0 V 400 M 0 '+n+' H 400" stroke="'+(n%100===0?'#b9a9c9':'#eee8f4')+'"/>';
+ for(let n=0;n<=400;n+=100)svg+='<text x="'+n+'" y="-13" text-anchor="middle">'+n+'</text><text x="-10" y="'+(n+5)+'" text-anchor="end">'+n+'</text>';
+ svg+=t.shape==='rect'?'<rect x="'+x+'" y="'+y+'" width="'+w+'" height="'+h+'" fill="'+t.color+'" stroke="black"/>':'<ellipse cx="'+x+'" cy="'+y+'" rx="'+w/2+'" ry="'+h/2+'" fill="'+t.color+'" stroke="black"/>';
+ return svg+'<circle cx="'+x+'" cy="'+y+'" r="5" fill="#111"/></svg>';
+}
+function renderOrder(){
+ const target=document.getElementById('buildQs');target.replaceChildren();
+ state.questionOrder.build.forEach((task,pos)=>{
+  const t=buildTasks[task],a=state.build[task],box=document.createElement('div');box.className='question';
+  const title=document.createElement('h3');title.textContent=(pos+1)+'. '+t.title;
+  const desc=document.createElement('p');desc.textContent=t.description;
+  const panels=document.createElement('div');panels.className='grid-pair';
+  const picture=document.createElement('div');picture.innerHTML='<b>Target picture</b>'+targetGrid(t)+'<p>The black dot marks the '+(t.shape==='rect'?'top-left corner.':'center.')+'</p>';
+  const code=document.createElement('div');
+  const bank=document.createElement('div');bank.className='parameter-bank';
+  const bankTitle=document.createElement('b');bankTitle.textContent='Number bank';code.append(bankTitle);
+  const message=document.createElement('p');message.className='muted';message.textContent=selectedTile&&selectedTile.task===task?'Number '+selectedTile.value+' selected. Click its parameter slot.':'Drag a number onto a parameter slot.';
+  const command=document.createElement('div');command.className='parameter-command';command.append(document.createTextNode('background("lavender");'),document.createElement('br'),document.createTextNode('fill("'+t.color+'");'),document.createElement('br'),document.createTextNode(t.shape+'('));
+  const slots=document.createElement('div');slots.className='parameter-slots';
+  ['x','y','width','height'].forEach((name,slot)=>{
+   const wrap=document.createElement('div');wrap.className='parameter-slot';wrap.dataset.slot=slot;wrap.setAttribute('aria-label',name+' drop target');
+   const label=document.createElement('label');label.textContent=name;
+   const select=document.createElement('select');select.setAttribute('aria-label',name+' for drawing '+(pos+1));select.disabled=locked('build');
+   select.innerHTML='<option value="">Choose</option>'+state.choiceOrder.build[task].map(v=>'<option>'+v+'</option>').join('');
+   select.value=a[slot]===null?'':a[slot];
+   if(state.checked.build)select.classList.add(a[slot]===t.values[slot]?'answer-correct':'answer-wrong');
+   select.onchange=()=>assignParameter(task,slot,select.value===''?null:Number(select.value));
+   wrap.addEventListener('click',e=>{
+    if(selectedTile&&selectedTile.task===task&&!locked('build')){e.preventDefault();assignParameter(task,slot,selectedTile.value)}
+   });
+   label.append(select);wrap.append(label);slots.append(wrap);
+  });
+  state.choiceOrder.build[task].forEach(value=>{
+   const tile=document.createElement('button');tile.type='button';tile.textContent=value;tile.className='number-tile';tile.disabled=locked('build');tile.setAttribute('aria-label','Number '+value+' for drawing '+(pos+1));
+   if(a.includes(value))tile.classList.add('placed');
+   let dragged=false;
+   tile.onclick=()=>{if(dragged){dragged=false;return}selectedTile={task,value};renderOrder()};
+   tile.addEventListener('pointerdown',e=>{
+    if(locked('build')||e.button!==0)return;
+    const startX=e.clientX,startY=e.clientY;e.preventDefault();tile.setPointerCapture(e.pointerId);tile.classList.add('dragging');
+    let to=null;
+    const move=event=>{
+     if(Math.hypot(event.clientX-startX,event.clientY-startY)>5)dragged=true;
+     const hit=document.elementFromPoint(event.clientX,event.clientY)?.closest('.parameter-slot');
+     slots.querySelectorAll('.parameter-slot').forEach(r=>r.classList.remove('drop-target'));
+     if(hit&&slots.contains(hit)){to=Number(hit.dataset.slot);hit.classList.add('drop-target')}else to=null;
+    };
+    const end=event=>{
+     tile.removeEventListener('pointermove',move);tile.removeEventListener('pointerup',end);tile.removeEventListener('pointercancel',end);
+     if(tile.hasPointerCapture(event.pointerId))tile.releasePointerCapture(event.pointerId);
+     tile.classList.remove('dragging');slots.querySelectorAll('.parameter-slot').forEach(r=>r.classList.remove('drop-target'));
+     if(event.type==='pointerup'&&to!==null)assignParameter(task,to,value);
+    };
+    tile.addEventListener('pointermove',move);tile.addEventListener('pointerup',end);tile.addEventListener('pointercancel',end);
+   });
+   bank.append(tile);
+  });
+  command.append(slots,document.createTextNode(');'));
+  code.append(bank,message,command);panels.append(picture,code);box.append(title,desc,panels);
+  if(state.checked.build){const feedback=document.createElement('p'),ok=a.every((v,j)=>v===t.values[j]);feedback.className='feedback '+(ok?'correct':'wrong');feedback.textContent=ok?'✓ All parameters are correct!':locked('build')?'✗ Incorrect parameters. Answers locked.':'✗ Incorrect parameters. Change the red values and check again.';box.append(feedback)}
+  target.append(box);
+ });
+ updateActivitySummary('build');
+}
+document.getElementById('checkOrder').onclick=()=>{if(locked('build'))return;state.attempts.build++;state.checked.build=true;save();renderOrder();syncChecks();drawScore()};
+
+function updateActivitySummary(key){
+  const id={identify:'identifySummary',build:'orderFeedback',apply:'applySummary',debug:'debugSummary'}[key];
+  const p=document.getElementById(id);
+  if(!state.checked[key]){p.textContent='';return}
+  let wrong,totalItems;
+  if(key==='identify'){totalItems=defs.length;wrong=defs.filter((d,i)=>state.identify[i]!==d[0]).length}
+  else if(key==='build'){totalItems=buildTasks.length;wrong=buildTasks.filter((t,i)=>!Array.isArray(state.build[i])||state.build[i].some((v,j)=>v!==t.values[j])).length}
+  else{const items=key==='apply'?apply:debug;totalItems=items.length;wrong=items.filter((q,i)=>state[key][i]===undefined||Number(state[key][i])!==q[2]).length}
+  p.className='feedback '+(wrong?'wrong':'correct');
+  const result=wrong?wrong+' of '+totalItems+(key==='build'?' drawings incorrect.':' answers incorrect.'):'✓ All answers are correct!';
+  const next=locked(key)?' Continue to the next activity.': ' Redo the incorrect answers, then click '+(key==='build'?'Check Answers':'Check Answers')+' again.';
+  p.textContent=attemptsLabel(key)+' '+result+next;
+}
+function renderMultiple(key,questions,targetId){updateActivitySummary(key);let target=document.getElementById(targetId);target.replaceChildren();state.questionOrder[key].forEach((i,position)=>{let q=questions[i],box=document.createElement('div');box.className='question';let title=document.createElement('p');title.textContent=(position+1)+'. '+q[0];box.append(title);let choices=document.createElement('div');choices.className='choices';let feedback=document.createElement('p');feedback.className='feedback';state.choiceOrder[key][i].forEach(j=>{let lab=document.createElement('label');let input=document.createElement('input');input.type='radio';input.name=key+i;input.value=j;input.checked=state[key][i]===String(j);input.disabled=locked(key);if(state.checked[key]&&input.checked)lab.classList.add(j===q[2]?'answer-correct':'answer-wrong');input.onchange=()=>{state[key][i]=String(j);state.checked[key]=false;save();renderMultiple(key,questions,targetId)};lab.append(input,document.createTextNode(q[1][j]));choices.append(lab)});let v=state[key][i];feedback.textContent=state.checked[key]?(v!==undefined&&Number(v)===q[2]?'✓ Correct!':locked(key)?'✗ Incorrect. Answers are now locked.':'✗ Incorrect. Change your answer and check again.'):'';feedback.className='feedback '+(v!==undefined&&Number(v)===q[2]?'correct':'wrong');box.append(choices,feedback);target.append(box)})}
+for(const [key,questions,target] of [['apply',apply,'applyQs'],['debug',debug,'debugQs']])document.getElementById('check'+key[0].toUpperCase()+key.slice(1)).onclick=()=>{if(locked(key))return;state.attempts[key]++;state.checked[key]=true;save();renderMultiple(key,questions,target);syncChecks();updateActivitySummary(key)};
+document.getElementById('review').onclick=()=>show('identify');
+document.getElementById('reset').onclick=()=>{if(!state.submitted||!state.receipt)return;if(submissionPending){alert('Please wait for the submission to finish before resetting.');return}if(!confirm('Clear all saved answers and start over? This does not remove any grade already recorded in your teacher’s spreadsheet.'))return;localStorage.removeItem(STORE);location.reload()};
+
+const SUBMISSION_READY=false;
+let submissionPending=false,submissionTimer=null,submissionFrame=null;
+if(!state.receipt)state.submitted=false;
+function syncSubmission(){
+  document.getElementById('reset').hidden=!(state.submitted&&state.receipt);
+  const button=document.getElementById('submit');
+  button.disabled=!SUBMISSION_READY||submissionPending||state.submitted;
+  if(!SUBMISSION_READY&&!state.submitted){const p=document.getElementById('submitStatus');p.textContent='Your work is saved on this browser. Grade submission for Lesson 04 is awaiting teacher setup. No grade has been sent.';}
+  button.textContent=state.submitted?'Results Submitted':submissionPending?'Submitting…':'Submit My Results';
+  for(const id of ['first','last','period','start'])document.getElementById(id).disabled=!!state.submissionPayload;
+  if(state.submitted){
+    const p=document.getElementById('submitStatus');p.className='feedback correct';
+    p.textContent='✓ Your grade was recorded successfully: '+state.receipt.score+'%. You may now reset the lab.';
+  }
+}
+function validReceipt(event){
+  const r=event.data;
+  let origin;try{origin=new URL(event.origin)}catch{return false}
+  return origin.protocol==='https:'&&
+    (origin.hostname==='script.google.com'||origin.hostname==='script.googleusercontent.com'||origin.hostname.endsWith('.script.googleusercontent.com')||/^[a-z0-9-]+-script\.googleusercontent\.com$/.test(origin.hostname))&&
+    r&&typeof r==='object'&&state.submissionPayload&&r.attemptId===state.submissionPayload.attemptId&&
+    typeof r.ok==='boolean';
+}
+window.addEventListener('message',event=>{
+  if(!validReceipt(event)||!submissionPending)return;
+  const r=event.data,p=document.getElementById('submitStatus');
+  if(r.ok&&(r.total!==total||r.points!==score()||r.score!==Math.round(score()/total*100)))return;
+  clearTimeout(submissionTimer);submissionPending=false;
+  if(r.ok){
+    state.receipt={attemptId:r.attemptId,score:r.score,points:r.points,total:r.total};
+    state.submitted=true;save();syncSubmission();
+  }else{
+    p.className='feedback wrong';p.textContent='Grade was not confirmed. '+(typeof r.message==='string'?r.message:'Please try again.');
+    syncSubmission();
+  }
+});
+document.getElementById('submit').onclick=()=>{
+  if(!SUBMISSION_READY||!checkedAll()||submissionPending||state.submitted)return;
+  if(!state.submissionPayload){
+    state.submissionPayload={
+      attemptId:crypto.randomUUID(),name:state.name,period:state.period,
+      lab:'Lesson 04: Shapes and Parameters',
+      answers:JSON.parse(JSON.stringify({identify:state.identify,build:state.build,apply:state.apply,debug:state.debug})),
+      checks:{...state.attempts}
+    };save();
+  }
+  submissionPending=true;syncSubmission();
+  const p=document.getElementById('submitStatus');p.className='feedback';
+  p.textContent='Sending your results. Waiting for confirmation that your grade was saved…';
+  if(submissionFrame)submissionFrame.remove();
+  submissionFrame=document.createElement('iframe');
+  submissionFrame.name='gradeReceipt_'+state.submissionPayload.attemptId;
+  submissionFrame.hidden=true;submissionFrame.title='Grade submission confirmation';
+  document.body.append(submissionFrame);
+  const form=document.createElement('form');form.method='POST';form.action=SUBMIT_URL;
+  form.target=submissionFrame.name;form.hidden=true;
+  const input=document.createElement('input');input.type='hidden';input.name='payload';
+  input.value=JSON.stringify(state.submissionPayload);form.append(input);document.body.append(form);
+  submissionTimer=setTimeout(()=>{
+    submissionPending=false;syncSubmission();p.className='feedback wrong';
+    p.textContent='We could not confirm your grade was saved. Your work is still saved. Click Submit My Results to retry; the same attempt will not create a duplicate grade.';
+  },60000);
+  form.submit();form.remove();
+};
+syncSubmission();
+
+renderMatch();renderOrder();renderMultiple('apply',apply,'applyQs');renderMultiple('debug',debug,'debugQs');show(state.page);
+</script></body></html>
